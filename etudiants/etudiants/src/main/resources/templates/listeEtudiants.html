@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="template">
+
+   <link rel="stylesheet" type="text/css"
+      href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+   <head>
+      <meta charset="utf-8">
+      <title>Liste des Etudiants</title>
+   </head>
+   <body>
+   
+	<div layout:fragment="Mycontent">
+   
+      <div class="container mt-5">
+         <div class="card">
+            <div class="card-header">
+               Liste des Etudiants
+            </div>
+            <div class="card-body">
+               <table class="table table-striped">
+                  <tr>
+                     <th>ID</th>
+                     <th>Nom Etudiant</th>
+                     <th>Moyenne</th>
+                     <th>Date Inscription</th>
+                     <th>Action</th>
+                  </tr>
+                  <tr th:each="e:${Etudiant.content}">
+                     <td th:text="${e.idetudiant}"></td>
+                     <td th:text="${e.nom}"></td>
+                     <td th:text="${e.moyenne}"></td>
+                     <td th:text="${e.dateInsrip}"></td>
+                     <td>
+                     <a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')"
+                        th:href="@{supprimerEtudiant(id=${e.idetudiant}, page=${currentPage},size=${size})}">Supprimer</a>
+                        <a class="btn btn-success" 
+						th:href="@{modifierEtudiant(id=${e.idetudiant})}">Editer</a>
+                        
+                        </td>
+                   </tr>
+                
+                
+               </table>
+               <ul class="nav nav-pills">
+                  <li th:each="page,status:${pages}">
+                     <a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+                        th:href="@{ ListeEtudiants(page=${status.index}, size=${size} ) }"
+                        th:text="${status.index }"></a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      
+      </div>
+   </body>
+</html>
+
